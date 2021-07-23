@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CropperJs With PHP</title>
+    <link rel="stylesheet" href="assets/cropperjs/dist/cropper.min.css">
+    <link rel="stylesheet" href="assets/main.css">
+</head>
+<body>
+<div class="container">
+    <div class="head">
+        <button type="button" id="crop">Kırp</button>
+        <div id="result"></div>
+    </div>
+    <img src="image.jpg" id="cropper_image"/>
+    <div class="image-copyright">
+        Resim <a href="https://pixabay.com/tr/users/proverbes-19290020/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6464429">Franchis Janel MOKOMBA</a> tarafından <a href="https://pixabay.com/tr/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6464429">Pixabay</a>'a yüklendi
+    </div>
+</div>
+<script src="assets/jquery/dist/jquery.min.js"></script>
+<script src="assets/cropperjs/dist/cropper.min.js"></script>
+<script src="assets/jquery-cropper/dist/jquery-cropper.min.js"></script>
+<script>
+
+    const image = $('#cropper_image');
+    let cropper;
+
+    let options = {
+        viewMode: 1,
+        autoCropArea: .75,
+        center: true,
+        restore: false,
+        dragMode: 'move',
+        movable: true,
+        highlight: true,
+        cropBoxResizable: true,
+        responsive: true,
+        zoomable: true,
+        toggleDragModeOnDblclick: false,
+        //CropBox dimensions
+        crop: function (e) {
+            let detail = e.detail;
+            if ($('.cropper-crop-box .size-container').length == 0) {
+                $('.cropper-crop-box').append('<div class="size-container"></div>');
+            }
+            $('.cropper-crop-box .size-container').html(`<h1>Width : ${Math.round(detail.width)}</h1><h1>Height : ${Math.round(detail.height)}</h1>`)
+        }
+    };
+
+    image.cropper(options);
+    cropper = image.data('cropper');
+    
+    $('#crop').click(function () {
+        canvas = cropper.getCroppedCanvas();
+
+        canvas.toBlob(function (blob) {
+            url = URL.createObjectURL(blob);
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+
+            reader.onloadend = function () {
+                const base64data = reader.result;
+                $.ajax({
+                    url: 'upload.php',
+                    method: 'POST',
+                    data: {image: base64data},
+                    success: function (data) {
+                        $('#result').html(data)
+                        setTimeout(function(){ $('#result').html('') }, 10000);
+                    }
+                });
+            };
+        });
+    });
+</script>
+</body>
+</html>

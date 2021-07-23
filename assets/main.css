@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+
+html,
+body {
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.container {
+    width: 900px;
+    max-width: 100%;
+    position: relative;
+}
+
+#cropper_image {
+    max-width: 100%;
+}
+
+.image-copyright {
+    width: 100%;
+    text-align: center;
+    background-color: #fafafa;
+    padding: 12px 0;
+    margin-top: 2rem;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.head #result {
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.head #result a {
+    font-weight: 600;
+}
+
+.head #crop {
+    padding: 12px 50px;
+    border: none;
+    background-color: #0B61A4;
+    color: #fff;
+    cursor: pointer;
+    transition: all ease .3s;
+}
+
+.head #crop:hover {
+    background-color: #033E6B;
+}
+
+.cropper-crop-box .size-container {
+    position: absolute;
+    z-index: 5;
+    background: #000;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.cropper-crop-box .size-container h1 {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    color: #fff;
+    font-family: sans-serif;
+    margin: 0;
+    margin-right: 6px;
+    padding: 4px;
+}
